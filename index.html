@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            text-align: center;
+        background-color: rgb(97, 114, 211);}
+        #enterDetails {float: left; width: 50%;  background-color: darkslategray; color: floralwhite;}
+        #findDetails {float: left; width: 50%; background-color: floralwhite; color: darkslategray;}
+        input {width: 120px;}
+        #banner {
+            padding-bottom: 20px;
+            padding-top: 20px;
+        }
+        #webApp{
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <img id = "banner" src="Profile_App.png">
+    <div id="enterDetails">
+        <button id="find1">First User</button>
+        <h3 id="findName1" type="text"></h3>
+        <h3 id="findCountry1" type="text"></h3> 
+        <h3 id="findNat1" type="text"></h3>
+        <h3 id="findHometown1" type="text"></h3> 
+        <img id = "image2" src ="" width = "200">
+    </div>
+
+    <div id="findDetails">
+
+        <button id="find">Second User</button>
+        <h3 id="findName" type="text"></h3>
+        <h3 id="findCountry" type="text"></h3> 
+        <h3 id="findNat" type="text"></h3>
+        <h3 id="findHometown" type="text"></h3> 
+        <img id = "image1" src ="" width = "200">
+    </div>
+
+    <iframe id = "webApp" src="https://thunkable.site/w/6IdzDs9SCS0DSJRvE5yYe" title="Chop Down the Tree Thunkable App" height = 1000 width = 500></iframe>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyBlIfRp5nz9dCX2lrhr2Dcg7B3rFmI929Q",
+          authDomain: "profileapp-cf95b.firebaseapp.com",
+          databaseURL: "https://profileapp-cf95b-default-rtdb.firebaseio.com",
+          projectId: "profileapp-cf95b",
+          storageBucket: "profileapp-cf95b.appspot.com",
+          messagingSenderId: "953727552710",
+          appId: "1:953727552710:web:aa2d7fa56cb6e7271c5bc7"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig); 
+
+
+        import {getDatabase, ref, get, set, child, update, remove}
+        from  "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js"
+
+        const db = getDatabase();
+        //first user 
+
+        var findID = document.querySelector("#findID");
+        var findName = document.querySelector("#findName");
+        var findCountry = document.querySelector("#findCountry");
+        var findNat = document.querySelector("#findNat");
+        var findHometown = document.querySelector("#findHometown");
+
+        var findBtn1 = document.querySelector("#find1");
+        var image2 = document.querySelector("#image2")
+
+        var findBtn = document.querySelector("#find");
+        var image1 = document.querySelector("#image1");
+
+
+        function FindData() {
+            const dbref = ref(db);
+
+            get(child(dbref, "E6ANsLdAZCZCrM2K0VIlnLhACat1"))
+            .then((snapshot)=>{
+                if(snapshot.exists()){
+                    findName.innerHTML = "Name: " + snapshot.val().name;
+                    findCountry.innerHTML = "Country: " + snapshot.val().country;
+                    findNat.innerHTML = "Nationality: " + snapshot.val().nat;
+                    findHometown.innerHTML = "Hometown: " + snapshot.val().hometown;
+                    image1.src = snapshot.val().image;
+                   
+                } else {
+                    alert("No data found");
+                }
+            })
+            .catch((error)=>{
+                alert(error)
+            })
+            
+        }
+        function FindData1() {
+            const dbref = ref(db);
+
+            get(child(dbref, "sGtFFnaUviNmAFHJP1ly5ckYjQq1"))
+            .then((snapshot)=>{
+                if(snapshot.exists()){
+                    findName1.innerHTML = "Name: " + snapshot.val().name;
+                    findCountry1.innerHTML = "Country: " + snapshot.val().country;
+                    findNat1.innerHTML = "Nationality: " + snapshot.val().nat;
+                    findHometown1.innerHTML = "Hometown: " + snapshot.val().hometown;
+                    image2.src = snapshot.val().image;
+                   
+                } else {
+                    alert("No data found");
+                }
+            })
+            .catch((error)=>{
+                alert(error)
+            })
+            
+        }
+
+
+        findBtn1.addEventListener('click', FindData1);
+        findBtn.addEventListener('click', FindData);
+
+
+        
+
+      </script>
+
+    
+
+    
+</body>
+</html>
